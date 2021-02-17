@@ -1,0 +1,76 @@
+function dtr2r1d_plot(S, xps, axh, axh2)
+% function dtr2d_plot(S, xps, axh, axh2)
+
+if (nargin < 4), axh2 = []; end
+
+opt = mdm_opt();
+opt = dtr2r1d_opt(opt);
+opt = mplot_opt(opt);
+
+% Customize options
+% opt.dtd.dmin = .05/max(xps.b);
+% opt.dtd.r2max = 55;
+
+S = abs(S);
+
+% list_i = [];
+% for i =1:length(S)-1 
+%     if S(i) > S(i+1)+1e4
+%         list_i = [list_i i];
+%     end
+% end
+
+% ind = ones([1, length(S)]);
+% ind(list_i(1:4)) = 0;
+% ind = logical(ind);
+% 
+% S = S(ind);
+% xps = mdm_xps_subsample(xps,logical(ind));
+
+% Show signal and fit
+%m = mplot_signal_and_fit(S, xps, @dtr2r1d_1d_data2fit, @dtr2r1d_1d_fit2data, axh, opt);
+m = mplot_signal_and_fit(S, xps, @dtr2r1d_1d_data2fit, @dtr2r1d_1d_fit2data, axh, opt);
+
+
+% Plot the tensor distribution
+[~,dpar,dperp,theta,phi,r2,r1,w] = dtr2r1d_dist2par(dtr2r1d_m2dtr2r1d(m));
+
+median(r2)
+iqr(r2)
+
+diso = (dpar+2*dperp)/3;
+dratio = dpar./dperp;
+
+% Set marker sizes
+w = w / sum(w);
+ms = 30 * opt.mplot.ms * sqrt(w);
+ms = real(ms);
+
+dist_d.x = log10(diso);
+dist_d.y = log10(dratio);
+dist_d.a = ms;
+dist_d.r = abs(cos(phi).*sin(theta));
+dist_d.g = abs(sin(phi).*sin(theta));
+dist_d.b = abs(cos(theta));
+dist_d.bright = (abs(dpar-dperp)./max([dpar dperp],[],2)).^2;
+
+axpars.xmin = -10; axpars.xmax = -8; 
+axpars.ymin = -2; axpars.ymax = 2;
+
+contourpars.Nx = 50; 
+contourpars.Ny = contourpars.Nx; 
+contourpars.Nz = contourpars.Nx;
+contourpars.Nlevels = 5;
+
+dist_d.z = log10(r2);
+axpars.zmin = -.5; axpars.zmax = 2;
+h = mplot_dtr2r1d(dist_d, axh2, opt, axpars, contourpars);
+set(h,'ZTick',0:.5:axpars.zmax)
+
+dist_d.z = log10(r1);
+axpars.zmin = -.5; axpars.zmax = 1;
+h = mplot_dtr2r1d(dist_d, gca, opt, axpars, contourpars);
+set(h,'ZTick',0:.1:axpars.zmax)
+
+    
+dps1d = dtr2d_dist2dps1d(dtr2d);
