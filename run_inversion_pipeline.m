@@ -1,4 +1,4 @@
-function exitflag = jm_inversion_pipeline(fn_data, fn_mask, fn_xps)
+function exitflag = run_inversion_pipeline(fn_data, fn_mask, fn_xps)
 %% jm_dtr2r1d_inversion_pipeline
 % Settings for md-dmri data reconstruction using nonparametric Monte Carlo inversion.
 % This script currently supports the following methods:
