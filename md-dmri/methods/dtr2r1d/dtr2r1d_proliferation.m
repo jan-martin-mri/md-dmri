@@ -11,14 +11,13 @@ n_proliferation = opt.dtr2r1d.n_proliferation; % number of node sets
 
 dtr2r1d_nodes1 = [];
 for niter = 1:n_proliferation    
-    % generate random nodes
+    % Generate a set of n_in nodes with random parameters
     dtr2r1d_nodes2 = dtr2r1d_rand(n_nodes,dmin,dmax,r2min,r2max,r1min,r1max);
-    % merge node sets
+    % Merge the random set of nodes with previous fit result
     dtr2r1d_nodes = dtr2r1d_nodes_merge(dtr2r1d_nodes1,dtr2r1d_nodes2);
-
-    % fit to data & get a full distribution
-    dtr2r1d = dtr2r1d_data2dtr2r1d(stemp,bt_mx6, te, tr, dtr2r1d_nodes);
-    
+    % Fit nodes to data and obtain a full distribution
+    dtr2r1d = dtr2r1d_data2dtr2r1d(stemp, bt_mx6, te, tr, dtr2r1d_nodes);
+    % Transform distribution to nodes
     dtr2r1d_nodes1 = dtr2r1d_dist2nodes(dtr2r1d); % extract nodes from distribution
 end
 

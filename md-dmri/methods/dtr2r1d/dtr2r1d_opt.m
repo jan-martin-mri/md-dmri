@@ -13,9 +13,9 @@ opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'dmax', 5e-9);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r2min', 1);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r2max', 30);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r1min', 0.2);
-opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r1max', 1);
+opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r1max', 2);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'n_in', 2e2); % number of nodes in NNLS inversion. [100 - 1000]
-opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'n_out', 10); % number of nodes constituting a solution
+opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'n_out', 50); % number of nodes constituting a solution
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'n_kill', 0); 
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'n_proliferation', 20); % number of initial iterations
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'n_extinction', 20); % number of mutation rounds
@@ -24,7 +24,7 @@ opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'dfuzz', .1);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r2fuzz', .1);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'r1fuzz', .1);
 
-opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 't1_weighting', 'spin_echo'); % 'spin_echo', 'saturation', 'wip_inversion'
+opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 't1_weighting', 'spin_echo'); % 'spin_echo', 'saturation', ('wip_inversion' only for 1d_fit2data)
 
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'do_bin', 0);
 opt.dtr2r1d = msf_ensure_field(opt.dtr2r1d, 'bin_r1min', [0 0 0]);

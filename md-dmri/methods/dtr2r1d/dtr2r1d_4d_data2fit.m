@@ -5,8 +5,17 @@ if (nargin < 3), opt = []; end
 
 res = -1;
 
-% ind = opt.dtr2d.ind_start:s.xps.n;
-ind = find(s.xps.b ~= 0);
+% jm, 2021-03-25: Reintroduced bootstrapping and indexing
+% Note that b-values are checked and removed during 
+% global_inversion_pipeline before transferring the xps to the data 
+% directory.
+if opt.do_bootstrap
+    disp('DEBUG: opt.do_bootstrap = 1 / Using bootstrap indices.');
+    ind = opt.bootstrap.ind;
+else
+    disp('DEBUG: opt.do_bootstrap = 0 / Using all measurements.');
+    ind = opt.dtr2r1d.ind_start : s.xps.n;
+end
 
 %Verify the xps
 %dti_euler_mic_check_xps(s.xps);

@@ -24,14 +24,14 @@ for niter = 1:n_extinction
     
     % repeat the dtr2r1d_nodes1 to generate a vector of n_nodes nodes, 
     % biased to contain more nodes corresponding to higher weights 
-    dtr2r1d_nodes2 = dtr2r1d_nodes_select(dtr2r1d_nodes1,ind);
+    dtr2r1d_nodes2 = dtr2r1d_nodes_select(dtr2r1d_nodes1, ind);
     % induce small mutations in the nodes within the dtr2r1d_nodes2 set
-    dtr2r1d_nodes2 = dtr2r1d_nodes_mutate(dtr2r1d_nodes2,opt);
+    dtr2r1d_nodes2 = dtr2r1d_nodes_mutate(dtr2r1d_nodes2 ,opt);
     % merge the original nodes with their mutations
-    dtr2r1d_nodes = dtr2r1d_nodes_merge(dtr2r1d_nodes1,dtr2r1d_nodes2);
+    dtr2r1d_nodes = dtr2r1d_nodes_merge(dtr2r1d_nodes1, dtr2r1d_nodes2);
     
     % Fit to data
-    dtr2r1d = dtr2r1d_data2dtr2r1d(stemp,bt_mx6,te,tr,dtr2r1d_nodes);    
+    dtr2r1d = dtr2r1d_data2dtr2r1d(stemp, bt_mx6, te, tr, dtr2r1d_nodes);    
 end
 
 if ~isempty(dtr2r1d)
@@ -39,5 +39,5 @@ if ~isempty(dtr2r1d)
     n_max = min([opt.dtr2r1d.n_out dtr2r1d(1)]);
     ind = 1:n_max;
     dtr2r1d_nodes = dtr2r1d_nodes_select(dtr2r1d_nodes,ind);
-    dtr2r1d = dtr2r1d_data2dtr2r1d(stemp,bt_mx6,te,tr,dtr2r1d_nodes);    
+    dtr2r1d = dtr2r1d_data2dtr2r1d(stemp, bt_mx6, te, tr, dtr2r1d_nodes);    
 end

@@ -21,6 +21,7 @@ if ~exist(data_directory, 'dir')
     b_threshold = 0.05; % 50 s/mm2
     xps = mdm_xps_load(fullfile(data_directory, input_parameters.xps_file));
     ind = xps.b * 1e-9 < b_threshold;
+    warning(['Removed ' num2str(sum(ind)) ' measurements acquired at b < ' num2str(b_threshold) ' ms/mm^2 from data.']);
     if nnz(ind) > 0
         if nnz(ind) >= xps.n
             error('global_inversion_pipeline: Found no measurements at b > %.2f ms/mm^2.', b_threshold);

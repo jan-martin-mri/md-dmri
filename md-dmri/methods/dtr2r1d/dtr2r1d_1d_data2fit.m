@@ -3,13 +3,11 @@ function m = dtr2r1d_1d_data2fit(signal, xps, opt, ind)
 %
 % Size-shape-orientation diffusion tensor distribution
 
-% if (nargin < 4), ind = find(xps.b ~= 0); end
-% if (nargin < 4), ind = find(xps.b ~= 0 & xps.b < 2e9); end
 if (nargin < 4), ind = ones(size(signal)) > 0; end
 
 % Filter out signal points with 0 or negative value
 % Implemented by Jan Martin on 2020-12-09
-ind = ind & (signal > 0);
+ind(signal(ind) <= 0) = [];
 
 % bt_mx6 = xps.bt(find(ind),:);
 bt_mx6 = xps.bt(ind,:); % b-tensor (Mandel notation) 

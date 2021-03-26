@@ -1,5 +1,5 @@
-function exitflag = run_inversion_pipeline(fn_data, fn_mask, fn_xps)
-%% run_inversion_pipeline
+function exitflag = jm_inversion_pipeline(fn_data, fn_mask, fn_xps)
+%% jm_dtr2r1d_inversion_pipeline
 % Settings for md-dmri data reconstruction using nonparametric Monte Carlo inversion.
 % This script currently supports the following methods:
 %     dtd
@@ -35,7 +35,7 @@ else
 end
 % Check if data, mask, and xps are located in the same folder
 if cond1 || cond2
-    error('run_inversion_pipeline: Data, mask, and xps need to be at the same location.');
+    error('jm_inversion_pipeline: Data, mask, and xps need to be at the same location.');
 end
 
 %% Inversion method
@@ -123,15 +123,15 @@ end
 input_parameters.repeat_colormaps = 0; 
 
 %% ODF parameters
-input_parameters.do_maps = 0;
-input_parameters.framework_directory = 'inversion_pipeline/md-dmri'; % Directory wherein 'methods' and 'tools' are located
-input_parameters.mrtrix_directory = ''; % Directory wherein the binaries of mrtrix are located
+input_parameters.do_maps = 1;
+input_parameters.framework_directory = '/Users/ja8663ma/Documents/MATLAB/Alexis_Reymbaut/Pipeline/md-dmri'; % Directory wherein 'methods' and 'tools' are located
+input_parameters.mrtrix_directory = '/usr/local/mrtrix3/bin'; % Directory wherein the binaries of mrtrix are located
 input_parameters.max_nb_odf_peaks = 4; % Maximal number of ODF peaks per voxel
 input_parameters.threshold_ODF_w = 0.1; % 0.05, 0.1, 0.15, take out the core of the ODF for peak calculation
 input_parameters.nb_mesh_nodes = 1000; % 250, 350, 500, 1000, 3994, or 15970, to serve as projecting mesh for the discrete ODFs
 
 %% Monte-Carlo density-peak clustering (MC-DPC)
-input_parameters.do_clustering = 0; % Do you want clustering to be performed?
+input_parameters.do_clustering = 1; % Do you want clustering to be performed?
 struct_clustering.max_nb_clusters = input_parameters.max_nb_odf_peaks; % Maximal number of clusters
 struct_clustering.do_plot = 0; % Print clustering plots, do not use for big volumes
 struct_clustering.min_weight_per_cluster = input_parameters.threshold_ODF_w; % Repeat clustering at the bootstrap level if one cluster does not weigh at least this
@@ -152,4 +152,4 @@ global_inversion_pipeline(input_parameters)
 
 exitflag = 1;
 pipeline_runtime = toc(tStart);
-disp(['run_inversion_pipeline finished in ' num2str(pipeline_runtime) ' s with exitflag ' num2str(exitflag)]);
+disp(['jm_inversion_pipeline finished in ' num2str(pipeline_runtime) ' s with exitflag ' num2str(exitflag)]);

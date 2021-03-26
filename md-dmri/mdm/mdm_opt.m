@@ -29,7 +29,7 @@ opt = msf_ensure_field(opt, 'filter_sigma', 0);
 
 opt = msf_ensure_field(opt, 'do_mask', 1);
 opt = msf_ensure_field(opt, 'do_data2fit', 1);
-opt = msf_ensure_field(opt, 'do_bootstrap', 0);
+opt = msf_ensure_field(opt, 'do_bootstrap', 1);
 opt = msf_ensure_field(opt, 'do_fit2param', 1);
 opt = msf_ensure_field(opt, 'do_param2nii', 1);
 opt = msf_ensure_field(opt, 'do_datafit2chisq', 0);
