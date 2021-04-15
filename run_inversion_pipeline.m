@@ -1,4 +1,4 @@
-function exitflag = run_inversion_pipeline(fn_data, fn_mask, fn_xps)
+function exitflag = jm_inversion_pipeline(fn_data, fn_mask, fn_xps)
 %% jm_dtr2r1d_inversion_pipeline
 % Settings for md-dmri data reconstruction using nonparametric Monte Carlo inversion.
 % This script currently supports the following methods:
@@ -37,6 +37,10 @@ end
 if cond1 || cond2
     error('jm_inversion_pipeline: Data, mask, and xps need to be at the same location.');
 end
+
+% Copy all option files used in the reconstruction (ensures reproducibility)
+copyfile(fullfile(fileparts(which('mdm_opt.m')), 'mdm_opt.m'), input_parameters.initial_directory);
+copyfile(fullfile(fileparts(which('dtr2r1d_opt.m')), 'dtr2r1d_opt.m'), input_parameters.initial_directory);
 
 %% Inversion method
 input_parameters.inversion_method = 'dtr2r1d'; % 'dtr2r1d', 'dtr2d', 'dtr1d', 'dtd'

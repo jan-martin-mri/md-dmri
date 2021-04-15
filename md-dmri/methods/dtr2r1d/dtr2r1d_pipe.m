@@ -21,19 +21,26 @@ if (opt.do_mask)
     s = mdm_s_mask(s, @mio_mask_threshold, [], opt);
 end
 
-% jm, 2021-03-26: Note that bootstrapping with replacement might no be
-% ideal here. We could instead use Monte Carlo cross-validation by randomly
-% sampling a fixed percentage of the acquisition scheme and not replacing
-% any data points. Code:
-% Siehe randperm(n, k), berechne k aus n mit neuem opt Parameter der den
-% Anteil an unique Messungen pro bootstrap festsetzt.
+% jm, 2021-04-15: Introduced Monte-Carlo crossvalidation as an alternative
+% to bootstrapping with replacement. This can be turned on via the mdm_opt
+% parameter "do_bootstrap_MCCV". The fraction of data that is used for this
+% bootstrap is controlled via mdm_opt "MCCV_fraction".
+
 % Run the analysis
 if (opt.do_data2fit)
     if opt.do_bootstrap
         % Create bootstrap directory
         msf_mkdir(fileparts(paths.ind_fn));
         % Randomly choose signal indices for bootstrapping
-        ind = (opt.dtr2r1d.ind_start-0) + round(rand([s.xps.n-(opt.dtr2r1d.ind_start-1),1])*(s.xps.n-(opt.dtr2r1d.ind_start-0)));
+        if opt.do_bootstrap_MCCV
+            disp(['Bootstrapping: Monte-Carlo crossvalidation with ' num2str(opt.MCCV_fraction) ' of the data.']);
+            n = s.xps.n;
+            k = floor(opt.MCCV_fraction * n);
+            ind = randperm(n, k)';
+        else
+            disp('Bootstrapping: Random sampling with replacement.');
+            ind = (opt.dtr2r1d.ind_start-0) + round(rand([s.xps.n-(opt.dtr2r1d.ind_start-1),1])*(s.xps.n-(opt.dtr2r1d.ind_start-0)));
+        end
         % Save bootstrap signal indices
         save(paths.ind_fn, 'ind');
         ind_fn = mdm_ind_save(ind, paths.ind_fn);

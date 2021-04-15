@@ -68,5 +68,10 @@ opt.mdm.pa.present = 1;
 opt.mdm.pa = msf_ensure_field(opt.mdm.pa, 'db', 0.1e9);
 opt.mdm.pa = msf_ensure_field(opt.mdm.pa, 'db_delta2', 0.25);
 
+% jm, 2021-04-15: Included options for Monte-Carlo crossvalidation
+% (currently only supported in 'dtr2r1d').
+opt = msf_ensure_field(opt, 'do_bootstrap_MCCV', 1);
+opt = msf_ensure_field(opt, 'MCCV_fraction', 0.8);
+
 
 
